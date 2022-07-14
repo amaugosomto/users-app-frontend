@@ -42,6 +42,6 @@
         <p class="text-danger small" *ngIf="confirmPassword?.errors?.['confirmedValidator']">Passwords does not match</p>
       </div>
     </div>
-    <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary">Submit</button>
+    <button [disabled]="registerForm.invalid" type="button" (click)="submit()" class="btn btn-primary">Submit</button>
   </form>
 </div>
