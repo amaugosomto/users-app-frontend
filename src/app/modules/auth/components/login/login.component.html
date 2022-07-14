@@ -1,1 +1,22 @@
-<p>login works!</p>
+<div class="login">
+  <h3 class="display-6 mb-3">Login User</h3>
+  <form [formGroup]="loginForm">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input required type="email" class="form-control" aria-describedby="email" formControlName="email">
+      <p class="text-muted small">We'll never share your email with anyone else.</p>
+      <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+        <p class="text-danger small" *ngIf="email?.errors?.['required']">Email is required</p>
+        <p class="text-danger small" *ngIf="email?.errors?.['email']">Email does not look right</p>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input required type="password" class="form-control" formControlName="password">
+      <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+        <p class="text-danger small" *ngIf="password?.errors?.['required']">Password is required</p>
+      </div>
+    </div>
+    <button [disabled]="loginForm.invalid" type="button" (click)="submit()" class="btn btn-primary">Login</button>
+  </form>
+</div>

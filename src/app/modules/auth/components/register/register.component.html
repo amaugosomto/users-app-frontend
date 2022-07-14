@@ -27,7 +27,7 @@
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input required type="text" class="form-control" formControlName="password">
+      <input required type="password" class="form-control" formControlName="password">
       <p class="text-muted small text-info">Password should have at least one uppercase, one lowercase and 6 letters long </p>
       <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
         <p class="text-danger small" *ngIf="password?.errors?.['required']">Password is required</p>

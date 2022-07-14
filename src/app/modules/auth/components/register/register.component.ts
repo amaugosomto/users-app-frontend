@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { IUser } from 'src/app/config';
 
+import { IUser } from 'src/app/config';
 import { AuthService } from '../../services/auth.service'
 
 @Component({
@@ -93,9 +93,19 @@ export class RegisterComponent implements OnInit {
     }
 
     this.authService.register(user).subscribe({
-      error: (e) => console.log(e),
-      next: (res) => console.log(res),
-      complete: () => console.log()
+      error: (e) => {
+        const errors = e.error.errors
+        if (errors) {
+          errors.map((error : {msg: string}) => {
+            alert(error.msg)
+          })
+        }
+
+        alert(e.error.msg || 'An error occured')
+      },
+      next: (res) => {
+        alert('Successfully created user')
+      }
     })
   }
 }

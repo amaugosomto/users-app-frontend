@@ -1,1 +1,3 @@
-<p>users works!</p>
+<div class="container">
+  <app-user *ngFor="let user of users; index as i; trackby: trackByFn"></app-user>
+</div>

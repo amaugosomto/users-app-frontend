@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders,  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 
 import { IUser, config } from '../../../config'
 
@@ -8,24 +8,21 @@ import { IUser, config } from '../../../config'
   providedIn: 'root'
 })
 export class AuthService {
-
+  private currentUserSource = new ReplaySubject<IUser | null>(1)
+  currentUser$ = this.currentUserSource.asObservable();
   rootURL = config.rootUrl
 
   constructor(private http: HttpClient) { }
 
-  createAuthorizationHeader(headers: HttpHeaders) {
-    headers.append('Content-Type', 'application/json; charset=utf-8');
-    headers.append('Access-Control-Allow-Origin', '*')
-    headers.append('content-type','application/x-www-form-urlencoded')
+  register(user: IUser): Observable<IUser> {
+    return this.http.post<IUser>(`${this.rootURL}/auth/register`, user)
   }
 
-  register(user: IUser): Observable<IUser> {
-    let headers = new HttpHeaders();
-    this.createAuthorizationHeader(headers)
+  login(user: IUser): Observable<{msg: string, payload: IUser}> {
+    return this.http.post<{msg: string, payload: IUser}>(`${this.rootURL}/auth/login`, user)
+  }
 
-    return this.http.post<IUser>(`${this.rootURL}/auth/register`, user, {
-      headers: headers,
-      
-    })
-  } 
+  setCurrentUser(user: IUser | null) {
+    this.currentUserSource.next(user);
+  }
 }
