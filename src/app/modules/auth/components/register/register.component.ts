@@ -105,6 +105,7 @@ export class RegisterComponent implements OnInit {
       },
       next: (res) => {
         alert('Successfully created user')
+        this.registerForm.reset()
       }
     })
   }

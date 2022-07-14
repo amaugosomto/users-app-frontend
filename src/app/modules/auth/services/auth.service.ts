@@ -10,7 +10,8 @@ import { IUser, config } from '../../../config'
 export class AuthService {
   private currentUserSource = new ReplaySubject<IUser | null>(1)
   currentUser$ = this.currentUserSource.asObservable();
-  rootURL = config.rootUrl
+  private rootURL = config.rootUrl
+  private user: IUser | null = null 
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +23,12 @@ export class AuthService {
     return this.http.post<{msg: string, payload: IUser}>(`${this.rootURL}/auth/login`, user)
   }
 
+  get getToken() {
+    return this.user?.token || ''
+  }
+
   setCurrentUser(user: IUser | null) {
     this.currentUserSource.next(user);
+    this.user = user
   }
 }

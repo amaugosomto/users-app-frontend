@@ -57,7 +57,9 @@ export class LoginComponent implements OnInit {
       next: (res) => {
         alert('Successfully logged in')
         const payload = res.payload;
+        console.log(typeof JSON.stringify(payload))
         localStorage.setItem('user', JSON.stringify(payload))
+        this.loginForm.reset()
         this.authService.setCurrentUser(payload)
         this.router.navigate(['users'])
       }
